@@ -8,7 +8,8 @@ import {
     } from 'class-validator';
 
 export class CreateUserDto {
-
+    
+    id:string;
     @ApiProperty({
         description: 'User`s name',
         example: "Bruna",
@@ -50,4 +51,8 @@ export class CreateUserDto {
     @IsBoolean()
     @IsNotEmpty()
         isAdmin: boolean;
+        
+        createdAt: Date;
+        updatedAt: Date;
+    
 }
