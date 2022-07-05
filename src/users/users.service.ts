@@ -19,7 +19,7 @@ export class UsersService {
     }
 
     async findOne(id: string) {
-      return await this.prisma.user.findFirst({ where: { id } });
+      return await this.prisma.user.findUnique({ where: { id } });
     }
 
     async update(id: string, dto: UpdateUserDto) {
