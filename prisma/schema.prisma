@@ -17,4 +17,38 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  favoriteMovies Movie[]
+
+}
+
+ model Genre {
+  id       String @id @default(uuid())
+  name     String @unique
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  movies Movie[]
+
+  @@map("genre")
+}
+
+  model Movie {
+  id       String @id @default(uuid())
+  name     String @unique
+  sinopse  String
+  time     String
+  imageURL String
+  video    String
+
+  genre    Genre @relation(fields: [genreId], references: [id])
+  genreId  String @map("genre_id")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  users User[]
+
+  @@map("movie")
  }

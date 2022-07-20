@@ -7,29 +7,30 @@ import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
-    constructor(
-        private readonly prisma: PrismaService, 
-        private readonly jwtService: JwtService,
-    ) {}
-        async login(loginDto: LoginDto): Promise<LoginResponseDto> {
-            const { email, password } = loginDto;
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly jwtService: JwtService,
+  ) {}
+  
+  async login(loginDto: LoginDto): Promise<LoginResponseDto> {
+    const { email, password } = loginDto;
 
-            const user = await this.prisma.user.findUnique({ where: { email } });
-            
-            if (!user) {
-                throw new UnauthorizedException('User and/or password is invalid');
-            }
-            
-            const isHashValid = await bcrypt.compare(password, user.password);
-            if (!isHashValid) {
-              throw new UnauthorizedException('User and/or password is invalid');
-            }
+    const user = await this.prisma.user.findUnique({ where: { email } });
 
-            delete user.password;
+    if (!user) {
+      throw new UnauthorizedException('User and/or password is invalid');
+    }
 
-            return {
-                token: this.jwtService.sign({ email }),
-                user,
-                };
-            }
+    const isHashValid = await bcrypt.compare(password, user.password);
+    if (!isHashValid) {
+      throw new UnauthorizedException('User and/or password is invalid');
+    }
+
+    delete user.password;
+
+    return {
+      token: this.jwtService.sign({ email }),
+      user,
+    };
+  }
 }

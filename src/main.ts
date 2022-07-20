@@ -16,6 +16,8 @@ async function bootstrap() {
     .addTag('status')
     .addTag('auth')
     .addTag('user')
+    .addTag('genre')
+    .addTag('movie')
     .addBearerAuth()
     .build();
 
